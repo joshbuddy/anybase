@@ -1,0 +1,19 @@
+=Anybase
+
+==Arbitrary number bases
+
+So often, I need to create random number bases, with random digits, to satisfy some crazy requirement.
+
+Here is an example of how you'd do hex in Anybase.
+
+  base = Anybase.new('0123456789abcdef')
+  base.to_i('f0a')
+  => 3850
+  base.to_native(123450)
+  => "1e23a"
+
+Anybase gives you a few built-in:
+Anybase::Hex, Anybase::Base64, Anybase::Base64ForURL and Anybase::Base62
+(should all be pretty self-explanatory)
+
+w00t, and cheers!
