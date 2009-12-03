@@ -7,13 +7,8 @@ begin
     s.homepage = "http://github.com/joshbuddy/anybase"
     s.authors = ["Joshua Hull"]
     s.files = FileList["[A-Z]*", "{lib,spec}/**/*"]
-    s.add_dependency 'fuzzyhash', '>=0.0.9'
   end
   Jeweler::GemcutterTasks.new
-  Jeweler::RubyforgeTasks.new do |rubyforge|
-    rubyforge.doc_task = "rdoc"
-    rubyforge.remote_doc_path = ''
-  end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
