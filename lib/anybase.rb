@@ -28,14 +28,17 @@ class Anybase
     num
   end
   
-  def to_native(val)
+  def to_native(val, options = nil)
     str = ''
     until val.zero?
       digit = val % chars.size
       val /= chars.size
       str[0, 0] = @num_map[digit]
     end
-    str
+    if options && options[:zero_pad]
+      str[0, 0] = @num_map[0] * (options[:zero_pad] - str.size)
+    end
+    str == '' ? @num_map[0].dup : str
   end
   
   Hex          = Anybase.new('0123456789abcdef', :ignore_case => true)
