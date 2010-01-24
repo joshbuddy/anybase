@@ -12,8 +12,19 @@ Here is an example of how you'd do hex in Anybase.
   base.to_native(123450)
   => "1e23a"
 
+As well, you can tell Anybase to ignore case.
+
+  base = Anybase.new('0123456789abcdef', :ignore_case => true)
+  base.to_i('F0A')
+  => 3850
+
+Anybase can also zeropad your output with whatever your "zero" character is.
+
+  Anybase.new("012345678").to_native(1234, :zero_pad => 8)
+  => '00001621'
+
 Anybase gives you a few built-in:
-Anybase::Hex, Anybase::Base64, Anybase::Base64ForURL and Anybase::Base62
+<tt>Anybase::Hex</tt>, <tt>Anybase::Base64</tt>, <tt>Anybase::Base64ForURL</tt> and <tt>Anybase::Base62</tt>
 (should all be pretty self-explanatory)
 
-w00t, and cheers!
+As well, there is an <tt>AnyBase::Base66ForURL</tt>. This includes <tt>.</tt> and <tt>~</tt> as well as the usual base64 url safe characters.
