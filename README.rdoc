@@ -27,4 +27,5 @@ Anybase gives you a few built-in:
 <tt>Anybase::Hex</tt>, <tt>Anybase::Base64</tt>, <tt>Anybase::Base64ForURL</tt> and <tt>Anybase::Base62</tt>
 (should all be pretty self-explanatory)
 
-As well, there is an <tt>AnyBase::Base66ForURL</tt>. This includes <tt>.</tt> and <tt>~</tt> as well as the usual base64 url safe characters.
+As well, there is an <tt>AnyBase::Base73ForURL</tt>. This includes the characters:
+<tt>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*\'(),</tt>
