@@ -1,33 +1,39 @@
 class Anybase
 
-  attr_reader :chars, :char_map, :num_map
-  
   UnrecognizedCharacterError = Class.new(RuntimeError)
-  
+  Hex          = Anybase.new('0123456789abcdef', :ignore_case => true)
+  Base62       = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
+  Base64       = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/')
+  Base64ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_')
+  Base73ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*\'(),')
+
+  attr_reader :chars, :char_map, :num_map
+
   def initialize(chars, opts = nil)
     @chars = chars
     @ignore_case = opts && opts.key?(:ignore_case) ? opts[:ignore_case] : false
+    @synonyms = opts && opts[:synonyms]
     @char_map = Hash.new{|h,k| raise UnrecognizedCharacterError.new("the character `#{k.chr}' is not included in #{@chars}")}
     @num_map = {}
     @chars.split('').each_with_index do |c, i|
-      if @ignore_case 
-        @char_map[c[0]] = i
-        @char_map[c.swapcase[0]] = i
-      else
-        @char_map[c[0]] = i
-      end
+      add_mapping(c, i)
       @num_map[i] = c
+      @synonyms[c].split('').each { |sc| add_mapping(sc, i) } if @synonyms && @synonyms[c]
     end
   end
-  
+
+  def ignore_case?
+    @ignore_case
+  end
+
   def to_i(val)
     num = 0
-    (0...val.size).each{|i| 
+    (0...val.size).each{|i|
       num += (chars.size ** (val.size - i - 1)) * char_map[val[i]]
     }
     num
   end
-  
+
   def to_native(val, options = nil)
     str = ''
     until val.zero?
@@ -40,12 +46,11 @@ class Anybase
     end
     str == '' ? num_map[0].dup : str
   end
-  
-  Hex          = Anybase.new('0123456789abcdef', :ignore_case => true)
-  Base62       = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789')
-  Base64       = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/')
-  Base64ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_')
-  Base73ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*\'(),')
-   
-  
+
+  def add_mapping(c, i)
+    char_map[c[0]] = i
+    char_map[c.swapcase[0]] = i if ignore_case?
+  end
+  private :add_mapping
+
 end

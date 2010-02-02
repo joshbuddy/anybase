@@ -18,6 +18,14 @@ As well, you can tell Anybase to ignore case.
   base.to_i('F0A')
   => 3850
 
+Anybase can also have synonyms.
+
+  base = Anybase.new('0123456789abcdef', :synonyms => {'0' => 'oO'})
+  base.to_i('FoA')
+  => 3850
+  base.to_i('FOA')
+  => 3850
+
 Anybase can also zeropad your output with whatever your "zero" character is.
 
   Anybase.new("012345678").to_native(1234, :zero_pad => 8)
