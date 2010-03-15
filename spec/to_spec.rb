@@ -16,4 +16,21 @@ describe Anybase, "to" do
     result.should == '00001621'
   end
 
+  it "create random numbers" do
+    srand(10)
+    result = Anybase.new("012345678").random(10)
+    result.should == '4010180864'
+
+    srand(39)
+    Anybase.new("012345678").random(10, :zero_pad => false).should == '463048140'
+  end
+
+  it "return a zero if thats all it can for a random number" do
+    result = Anybase.new("0").random(10)
+    result.should == '0000000000'
+
+    result = Anybase.new("0").random(10, :zero_pad => false)
+    result.should == '0'
+  end
+
 end

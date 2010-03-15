@@ -20,7 +20,18 @@ class Anybase
   def ignore_case?
     @ignore_case
   end
-
+  
+  def random(digits, opts = nil)
+    zero_pad = opts && opts.key?(:zero_pad) ? opts[:zero_pad] : true
+    number = ''
+    digits.times { number << chars[rand(chars.size)]}
+    unless zero_pad
+      number.sub!(/\A#{Regexp.quote(chars[0].chr)}+/, '')
+      number = chars[0].chr if number.empty?
+    end
+    number
+  end
+  
   def to_i(val)
     num = 0
     (0...val.size).each{|i|

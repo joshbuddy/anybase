@@ -31,6 +31,11 @@ Anybase can also zeropad your output with whatever your "zero" character is.
   Anybase.new("012345678").to_native(1234, :zero_pad => 8)
   => '00001621'
 
+Anybase also lets you create random numbers of any number of digits
+
+  Anybase.new("012345678").random(20)
+  => '62400274212676317317'
+
 Anybase gives you a few built-in:
 <tt>Anybase::Hex</tt>, <tt>Anybase::Base64</tt>, <tt>Anybase::Base64ForURL</tt> and <tt>Anybase::Base62</tt>
 (should all be pretty self-explanatory)
