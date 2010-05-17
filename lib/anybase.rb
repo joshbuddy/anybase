@@ -21,6 +21,10 @@ class Anybase
     @ignore_case
   end
   
+  def size(digits)
+    chars.length ** digits
+  end
+  
   def random(digits, opts = nil)
     zero_pad = opts && opts.key?(:zero_pad) ? opts[:zero_pad] : true
     number = ''
