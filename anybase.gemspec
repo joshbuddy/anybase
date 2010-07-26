@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.basename(__FILE__), 'lib', 'anybase', 'version'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'anybase', 'version'))
 
 Gem::Specification.new do |s|
   s.name = "anybase"
