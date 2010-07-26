@@ -1,17 +1,6 @@
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |s|
-    s.name = "anybase"
-    s.description = s.summary = "Numbers from anybase to anybase"
-    s.email = "joshbuddy@gmail.com"
-    s.homepage = "http://github.com/joshbuddy/anybase"
-    s.authors = ["Joshua Hull"]
-    s.files = FileList["[A-Z]*", "{lib,spec}/**/*"]
-  end
-  Jeweler::GemcutterTasks.new
-rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
-end
+require 'ext/gem_rake'
+
+Bundler::GemHelper.install_tasks
 
 require 'spec'
 require 'spec/rake/spectask'
