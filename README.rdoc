@@ -20,11 +20,17 @@ As well, you can tell Anybase to ignore case.
 
 Anybase can also have synonyms.
 
-  base = Anybase.new('0123456789abcdef', :synonyms => {'0' => 'oO'})
+  base = Anybase.new('0123456789abcdef', :synonyms => {'0' => 'oO'}, :ignore_case => true)
   base.to_i('FoA')
   => 3850
   base.to_i('FOA')
   => 3850
+
+If you just want to translate the number to look at it you can use #normalize
+
+  base = Anybase.new('0123456789abcdef', :synonyms => {'0' => 'oO'}, :ignore_case => true)
+  base.normalize('FoA')
+  => 'f0a'
 
 Anybase can also zeropad your output with whatever your "zero" character is.
 
