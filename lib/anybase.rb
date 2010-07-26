@@ -1,3 +1,5 @@
+require 'anybase/version'
+
 class Anybase
 
   UnrecognizedCharacterError = Class.new(RuntimeError)
@@ -8,12 +10,21 @@ class Anybase
     @chars = chars
     @ignore_case = opts && opts.key?(:ignore_case) ? opts[:ignore_case] : false
     @synonyms = opts && opts[:synonyms]
+    @synonyms_tr = ['', ''] if @synonyms
     @char_map = Hash.new{|h,k| raise UnrecognizedCharacterError.new("the character `#{k.chr}' is not included in #{@chars}")}
     @num_map = {}
+    if ignore_case?
+      @chars.downcase!
+    end
     @chars.split('').each_with_index do |c, i|
       add_mapping(c, i)
       @num_map[i] = c
-      @synonyms[c].split('').each { |sc| add_mapping(sc, i) } if @synonyms && @synonyms[c]
+      if @synonyms && @synonyms[c]
+        @synonyms[c].split('').each { |sc| 
+          @synonyms_tr[1] << c
+          @synonyms_tr[0] << sc
+        }
+      end
     end
   end
 
@@ -25,6 +36,11 @@ class Anybase
     chars.length ** digits
   end
   
+  def normalize(val)
+    val = val.downcase if ignore_case?
+    @synonyms ? val.tr(*@synonyms_tr) : val
+  end
+
   def random(digits, opts = nil)
     zero_pad = opts && opts.key?(:zero_pad) ? opts[:zero_pad] : true
     number = ''
@@ -37,6 +53,7 @@ class Anybase
   end
   
   def to_i(val)
+    val = normalize(val)
     num = 0
     (0...val.size).each{|i|
       num += (chars.size ** (val.size - i - 1)) * char_map[val[i]]
@@ -59,7 +76,6 @@ class Anybase
 
   def add_mapping(c, i)
     char_map[c[0]] = i
-    char_map[c.swapcase[0]] = i if ignore_case?
   end
   private :add_mapping
 
