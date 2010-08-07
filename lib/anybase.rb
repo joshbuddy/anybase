@@ -62,6 +62,7 @@ class Anybase
   end
 
   def to_native(val, options = nil)
+    raise unless val >= 0
     str = ''
     until val.zero?
       digit = val % chars.size

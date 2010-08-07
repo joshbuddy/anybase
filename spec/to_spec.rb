@@ -10,6 +10,10 @@ describe Anybase, "to" do
     Anybase.new("012345678").to_native(0).should == "0"
   end
 
+  it "should raise on negative numbers" do
+    proc { Anybase.new("012345678").to_native(-10)}.should raise_error
+  end
+
   it "should zeropad" do
     result = Anybase.new("012345678").to_native(1234, :zero_pad => 8)
     result.size.should == 8
