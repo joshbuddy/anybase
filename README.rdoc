@@ -32,6 +32,12 @@ If you just want to translate the number to look at it you can use #normalize
   base.normalize('FoA')
   => 'f0a'
 
+If you want to use negative numbers, assign the sign character using the sign option
+
+  base = Anybase.new('0123456789abcdef', :sign => '-')
+  base.to_native(-12345)
+  => '-3039'
+
 Anybase can also zeropad your output with whatever your "zero" character is.
 
   Anybase.new("012345678").to_native(1234, :zero_pad => 8)
