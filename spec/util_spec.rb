@@ -10,4 +10,8 @@ describe Anybase, "from" do
   it "should normalize a number" do
     Anybase.new("01", :synonyms => {'0' => 'o', '1' => 'l'}, :ignore_case => true).normalize("l10oO1o").should == '1100010'
   end
+
+  it "raise if the sign is in the chars" do
+    proc{ Anybase.new("01", :sign => '0') }.should raise_error
+  end
 end

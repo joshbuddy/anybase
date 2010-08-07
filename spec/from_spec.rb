@@ -16,6 +16,10 @@ describe Anybase, "from" do
     base.to_i(str).should == base.to_i(str.swapcase)
   end
 
+  it "should translate negative numbers with a sign" do
+    Anybase.new("012345678", :sign => '9').to_i('911').should == -10
+  end
+
   it "should use synonymous" do
     Anybase.new("012345678", :synonyms => {'0' => 'oO'}).to_i('O235o').should == 1746
     proc { Anybase.new("012345678", :synonyms => {'0' => 'o'}).to_i('235O') }.should raise_error(Anybase::UnrecognizedCharacterError)

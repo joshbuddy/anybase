@@ -10,8 +10,12 @@ describe Anybase, "to" do
     Anybase.new("012345678").to_native(0).should == "0"
   end
 
-  it "should raise on negative numbers" do
+  it "should normally raise on negative numbers" do
     proc { Anybase.new("012345678").to_native(-10)}.should raise_error
+  end
+
+  it "should translate negative numbers with a sign" do
+    Anybase.new("012345678", :sign => '9').to_native(-10).should == '911'
   end
 
   it "should zeropad" do

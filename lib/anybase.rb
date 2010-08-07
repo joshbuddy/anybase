@@ -9,6 +9,8 @@ class Anybase
   def initialize(chars, opts = nil)
     @chars = chars
     @ignore_case = opts && opts.key?(:ignore_case) ? opts[:ignore_case] : false
+    @sign = opts && opts.key?(:sign) ? opts[:sign] : nil
+    raise if @sign && @chars.index(@sign)
     @synonyms = opts && opts[:synonyms]
     @synonyms_tr = ['', ''] if @synonyms
     @char_map = Hash.new{|h,k| raise UnrecognizedCharacterError.new("the character `#{k.chr}' is not included in #{@chars}")}
@@ -54,15 +56,28 @@ class Anybase
   
   def to_i(val)
     val = normalize(val)
+    op = if @sign and val[0] == @sign[0]
+      val.slice!(0, 1)
+      :-
+    else
+      :+
+    end
     num = 0
     (0...val.size).each{|i|
-      num += (chars.size ** (val.size - i - 1)) * char_map[val[i]]
+      num = num.send(op, (chars.size ** (val.size - i - 1)) * char_map[val[i]])
     }
     num
   end
 
   def to_native(val, options = nil)
-    raise unless val >= 0
+    if val < 0
+      if @sign
+        val = val.abs
+        signed = true
+      else
+        raise
+      end
+    end
     str = ''
     until val.zero?
       digit = val % chars.size
@@ -72,7 +87,7 @@ class Anybase
     if options && options[:zero_pad]
       str[0, 0] = num_map[0] * (options[:zero_pad] - str.size)
     end
-    str == '' ? num_map[0].dup : str
+    str == '' ? num_map[0].dup : (signed ? @sign.dup << str : str)
   end
 
   def add_mapping(c, i)
