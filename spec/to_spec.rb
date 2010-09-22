@@ -24,6 +24,12 @@ describe Anybase, "to" do
     result.should == '00001621'
   end
 
+  it "should zeropad large numbers" do
+    result = Anybase.new("012345678").to_native(1234, :zero_pad => 2)
+    result.size.should == 4
+    result.should == '1621'
+  end
+
   it "create random numbers" do
     srand(10)
     result = Anybase.new("012345678").random(10)

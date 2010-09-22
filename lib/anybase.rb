@@ -84,7 +84,7 @@ class Anybase
       val /= chars.size
       str[0, 0] = num_map[digit]
     end
-    if options && options[:zero_pad]
+    if options && options[:zero_pad] && (options[:zero_pad] - str.size) > 0
       str[0, 0] = num_map[0] * (options[:zero_pad] - str.size)
     end
     str == '' ? num_map[0].dup : (signed ? @sign.dup << str : str)
