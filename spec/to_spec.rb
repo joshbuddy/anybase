@@ -19,15 +19,9 @@ describe Anybase, "to" do
   end
 
   it "should zeropad" do
-    result = Anybase.new("012345678").to_native(1234, :zero_pad => 8)
-    result.size.should == 8
-    result.should == '00001621'
-  end
-
-  it "should zeropad large numbers" do
-    result = Anybase.new("012345678").to_native(1234, :zero_pad => 2)
-    result.size.should == 4
-    result.should == '1621'
+    Anybase.new("012345678").to_native(1234, :zero_pad => 2).should == '1621'
+    Anybase.new("012345678").to_native(1234, :zero_pad => 4).should == '1621'
+    Anybase.new("012345678").to_native(1234, :zero_pad => 8).should == '00001621'
   end
 
   it "create random numbers" do
