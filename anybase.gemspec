@@ -2,8 +2,8 @@ require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'anybase', 've
 
 Gem::Specification.new do |s|
   s.name = "anybase"
-  s.version = Anybase::VERSION
-
+  s.version = Anybase::Version
+  
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Hull"]
   s.date = "2010-07-26"

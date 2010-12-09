@@ -1,3 +1,3 @@
 class Anybase
-  VERSION = '0.0.11'.freeze
+  Version = '0.0.11'
 end
