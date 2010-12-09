@@ -1,4 +1,4 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'anybase', 'version'))
+require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'anybase', 'version')) unless defined? Anybase::Version
 
 Gem::Specification.new do |s|
   s.name = "anybase"
@@ -28,4 +28,3 @@ Gem::Specification.new do |s|
   else
   end
 end
-
