@@ -1,18 +1,8 @@
-# require 'ext/gem_rake'
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
-require 'bundler'
-Bundler::GemHelper.install_tasks
-
-require 'spec'
-require 'spec/rake/spectask'
-task :spec => 'spec:all'
-namespace(:spec) do
-  Spec::Rake::SpecTask.new(:all) do |t|
-    t.spec_opts ||= []
-    t.spec_opts << "-rubygems"
-    t.spec_opts << "--options" << "spec/spec.opts"
-    t.spec_files = FileList['spec/**/*_spec.rb']
-  end
-
+desc "Run specs"
+RSpec::Core::RakeTask.new do |t|
+  t.pattern = "./spec/**/*_spec.rb" # don't need this, it's default.
+  # Put spec opts in a file named .rspec in root
 end
-

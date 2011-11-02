@@ -1,4 +1,4 @@
-require 'anybase/version'
+require "anybase/version"
 
 class Anybase
 

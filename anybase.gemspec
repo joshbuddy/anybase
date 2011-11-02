@@ -1,30 +1,23 @@
-require File.expand_path(File.join(File.dirname(__FILE__), 'lib', 'anybase', 'version')) unless defined? Anybase::Version
+# -*- encoding: utf-8 -*-
+$:.push File.expand_path("../lib", __FILE__)
+require "anybase/version"
 
 Gem::Specification.new do |s|
-  s.name = "anybase"
-  s.version = Anybase::Version
-  
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Joshua Hull"]
-  s.date = "2010-07-26"
+  s.name        = "anybase"
+  s.version     = Anybase::VERSION
+  s.authors     = ["Joshual Hull", "Brad Gessler"]
+  s.email       = ["joshbuddy@gmail.com", "brad@bradgessler.com"]
+  s.homepage    = "http://github.com/joshbuddy/anybase"
+  s.summary     = %q{Numbers from anybase to anybase}
   s.description = %q{Numbers from anybase to anybase}
-  s.email = %q{joshbuddy@gmail.com}
-  s.extra_rdoc_files = ['README.rdoc']
-  s.files = `git ls-files`.split("\n")
-  s.homepage = %q{http://github.com/joshbuddy/anybase}
-  s.rdoc_options = ["--charset=UTF-8"]
+
+  s.rubyforge_project = "anybase"
+
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
-  s.summary = %q{Numbers from anybase to anybase}
-  s.test_files = `git ls-files`.split("\n").select{|f| f[/^spec/]}
 
-  if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 3
-
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-    else
-    end
-  else
-  end
+  # specify any dependencies here; for example:
+  s.add_development_dependency "rspec"
 end
