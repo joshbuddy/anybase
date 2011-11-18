@@ -1,5 +1,4 @@
-require 'dirge'
-require ~'spec_helper'
+require 'spec_helper'
 
 describe Anybase, "from" do
   it "should tell you the size for an arbitrary number of digits" do

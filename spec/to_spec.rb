@@ -1,5 +1,4 @@
-require 'dirge'
-require ~'spec_helper'
+require 'spec_helper'
 
 describe Anybase, "to" do
   it "should translate base to a number from a string " do
