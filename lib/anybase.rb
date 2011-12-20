@@ -18,15 +18,28 @@ class Anybase
     if ignore_case?
       @chars.downcase!
     end
+    regexp_str = '['
     @chars.split('').each_with_index do |c, i|
+      regexp_str << Regexp.quote(c)
       add_mapping(c, i)
       @num_map[i] = c
       if @synonyms && @synonyms[c]
         @synonyms[c].split('').each { |sc| 
+          regexp_str << Regexp.quote(sc)
           @synonyms_tr[1] << c
           @synonyms_tr[0] << sc
         }
       end
+    end
+    regexp_str << ']+'
+    @regexp = @ignore_case ? Regexp.new(regexp_str, Regexp::IGNORECASE) : Regexp.new(regexp_str)
+  end
+
+  def match(str)
+    if match = @regexp.match(str)
+      match.begin(0) == 0 ? match[0] : nil
+    else
+      nil
     end
   end
 
@@ -100,5 +113,4 @@ class Anybase
   Base64       = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/')
   Base64ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_')
   Base73ForURL = Anybase.new('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$-_.+!*\'(),')
-
 end
