@@ -4,7 +4,7 @@ class Anybase
 
   UnrecognizedCharacterError = Class.new(RuntimeError)
 
-  attr_reader :chars, :char_map, :num_map
+  attr_reader :chars, :char_map, :num_map, :regexp
 
   def initialize(chars, opts = nil)
     @chars = chars
