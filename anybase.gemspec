@@ -21,4 +21,7 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_development_dependency "rspec"
   s.add_development_dependency "rake"
+
+  # Required for testing SecureRandom. Don't load this in production!
+  s.add_development_dependency "insecure_random"
 end

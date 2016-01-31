@@ -1,4 +1,5 @@
 require "anybase/version"
+require "securerandom"
 
 class Anybase
 
@@ -24,7 +25,7 @@ class Anybase
       add_mapping(c, i)
       @num_map[i] = c
       if @synonyms && @synonyms[c]
-        @synonyms[c].split('').each { |sc| 
+        @synonyms[c].split('').each { |sc|
           regexp_str << Regexp.quote(sc)
           @synonyms_tr[1] << c
           @synonyms_tr[0] << sc
@@ -46,11 +47,11 @@ class Anybase
   def ignore_case?
     @ignore_case
   end
-  
+
   def size(digits)
     chars.length ** digits
   end
-  
+
   def normalize(val)
     val = val.downcase if ignore_case?
     @synonyms ? val.tr(*@synonyms_tr) : val
@@ -59,14 +60,14 @@ class Anybase
   def random(digits, opts = nil)
     zero_pad = opts && opts.key?(:zero_pad) ? opts[:zero_pad] : true
     number = ''
-    digits.times { number << chars[rand(chars.size)]}
+    digits.times { number << chars[SecureRandom.random_number(chars.size)]}
     unless zero_pad
       number.sub!(/\A#{Regexp.quote(chars[0].chr)}+/, '')
       number = chars[0].chr if number.empty?
     end
     number
   end
-  
+
   def to_i(val)
     val = normalize(val)
     op = if @sign and val[0] == @sign[0]
