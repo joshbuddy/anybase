@@ -24,12 +24,12 @@ describe Anybase, "to" do
   end
 
   it "create random numbers" do
-    srand(10)
+    allow(SecureRandom).to receive(:random_number).and_return(5,4,3,2,1,0)
     result = Anybase.new("012345678").random(10)
-    expect(result).to eq('4010180864')
+    expect(result).to eq('5432100000')
 
-    srand(39)
-    expect(Anybase.new("012345678").random(10, :zero_pad => false)).to eq('463048140')
+    allow(SecureRandom).to receive(:random_number).and_return(0,0,1,2,3,4,5)
+    expect(Anybase.new("012345678").random(10, :zero_pad => false)).to eq('12345555')
   end
 
   it "return a zero if thats all it can for a random number" do
