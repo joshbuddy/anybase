@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 1.9.3
+  - 2.2
+  - 2.1
+  - 2.0
+  - jruby-19mode # JRuby in 1.9 mode
+  - rbx-2
+
+# Force build to be use Travis' newer container-based builds, which seem
+# more reliable.
+# https://docs.travis-ci.com/user/workers/container-based-infrastructure/#Routing-your-build-to-container-based-infrastructure
+sudo: false
