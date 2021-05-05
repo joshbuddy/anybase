@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = "http://github.com/joshbuddy/anybase"
   s.summary     = %q{Numbers from anybase to anybase}
   s.description = %q{Numbers from anybase to anybase}
+  s.licenses    = ["MIT"]
 
   s.rubyforge_project = "anybase"
 
