@@ -8,7 +8,7 @@ class Anybase
   attr_reader :chars, :char_map, :num_map, :regexp
 
   def initialize(chars, opts = nil)
-    @chars = chars
+    @chars = chars.dup
     @ignore_case = opts && opts.key?(:ignore_case) ? opts[:ignore_case] : false
     @sign = opts && opts.key?(:sign) ? opts[:sign] : nil
     raise if @sign && @chars.index(@sign)
